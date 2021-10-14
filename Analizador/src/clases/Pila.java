@@ -37,4 +37,8 @@ public class Pila {
     public boolean PilaVacia(){
         return UltimoValorIngresado==null;
     }
+    
+    
 }
+
+
