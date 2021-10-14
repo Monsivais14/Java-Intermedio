@@ -18,7 +18,7 @@ public class Interfaz extends javax.swing.JFrame {
     public Interfaz() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txt_expresion.setText("()");
+        txt_expresion.setText("");
     }
 
     /**
