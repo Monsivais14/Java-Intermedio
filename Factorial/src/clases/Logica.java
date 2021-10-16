@@ -15,7 +15,7 @@ public class Logica {
     Scanner in = new Scanner(System.in);
 
     public void datos() {
-        System.out.print("Dame el numero al cual calcular su factoral: ");
+        System.out.print("Dame el numero al cual calcular su factorial: ");
         numero = in.nextInt();
         aux = numero;
 
@@ -23,7 +23,6 @@ public class Logica {
 
     public void factorial() {
 
-        
         aux--;
         
         if (aux >= 1) {
