@@ -16,6 +16,14 @@ import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Font;
+import java.io.IOException;
+
 /*
 Primero hay qe abregar el "driver" en formato jar en la libreria del proyecto
  */
@@ -246,15 +254,15 @@ public class RegistroAlumnos extends javax.swing.JFrame {
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_ins", "Monsi", "monsi270405"); //conexion a base de datos
             PreparedStatement pst = cn.prepareStatement("delete from alumnos where ID = ?");
-            
+
             pst.setString(1, txt_buscar.getText().trim());
             pst.executeUpdate();
-            
+
             txt_nombre.setText("");
             txt_grupo.setText("");
-            
+
             label_status.setText("Eliminacion exitosa");
-            
+
         } catch (Exception e) {
             label_status.setText("Error al Eliminar");
             System.out.print(e);
@@ -262,43 +270,58 @@ public class RegistroAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-            
+
         Document documento = new Document(); //clase documento de la libreria itextpdf de terceros        
-        
-        try{
+
+        try {
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta+"/Escritorio/reporte.pdf"));//en donde va a guardar el documento
-            documento.open();
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Escritorio/reporte.pdf"));//en donde va a guardar el documento
+
+            Image header = Image.getInstance("src/img/header.png"); //imagen header en paquete img 
+            header.scaleToFit(650, 1000); //largo y escala
+            header.setAlignment(Chunk.ALIGN_CENTER); //permite alinear la imagen
+
+            Paragraph parrafo = new Paragraph();//formato de texto
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);//alinear centro
+            parrafo.add("Formato de base de datos \n\n"); //leyenda que este dentro del pdf, se puede agregar cualquier texto
+            parrafo.setFont(FontFactory.getFont("Tahoma", 18, Font.BOLD, BaseColor.BLACK)); //estilo de letra
+            parrafo.add("Alumnos registrados \n\n");
+
+            documento.open();  //documento abierto
+            documento.add(header);//anadir imagen
+            documento.add(parrafo); //anadir texto antes creado
             
             PdfPTable tabla = new PdfPTable(3);
             tabla.addCell(" ID ");
             tabla.addCell(" Nombre del Alumno ");
             tabla.addCell(" Grupo ");
-            
-            try{
-                
-                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/bd_ins","Monsi","monsi270405");
+
+            try {
+
+                Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/bd_ins", "Monsi", "monsi270405");
                 PreparedStatement pst = cn.prepareStatement("select * from alumnos");
-                
+
                 ResultSet rs = pst.executeQuery();
-                
-                if(rs.next()){ //verifica si hay informacion den la base
-                    
-                    do{ 
+
+                if (rs.next()) { //verifica si hay informacion den la base
+
+                    do {
                         tabla.addCell(rs.getString(1));
                         tabla.addCell(rs.getString(2));
                         tabla.addCell(rs.getString(3));
-                    }while(rs.next());
+                    } while (rs.next());
                     documento.add(tabla);
                 }
-                               
-            }catch(DocumentException | SQLException e){
-                System.out.println("Base de datos en imprimir "+e );
+
+            } catch (DocumentException | SQLException e) {
+                System.out.println("Base de datos en imprimir " + e);
             }
-            documento.close();
+            documento.close();  //cerrar documento 
             JOptionPane.showMessageDialog(null, "Reporte creado.");
-        }catch(DocumentException | HeadlessException | FileNotFoundException e){
-            System.out.println("Error al crear pdf "+e);
+        } catch (DocumentException | HeadlessException | FileNotFoundException e) { //catch de pdf
+            System.out.println("Error al crear pdf " + e);
+        } catch (IOException e) {  //catch de imagen
+            System.out.print("Error de imagen: " + e);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
