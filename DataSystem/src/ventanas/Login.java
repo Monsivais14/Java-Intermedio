@@ -8,6 +8,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
+import java.sql.*;
+import clases.Conexion;
+import javax.swing.JOptionPane;
 /**
  *
  * @author klite
@@ -17,6 +20,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    
+    public static String user = "";
+    String pass = "";
+    
     public Login() {
         initComponents();
         
@@ -56,10 +63,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel_Logo = new javax.swing.JLabel();
         txt_password = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Jbutton_acceder = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
+        jlabel_footer = new javax.swing.JLabel();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -79,13 +87,14 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 220, -1));
 
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Jbutton_acceder.setText("Ingresar");
+        Jbutton_acceder.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Jbutton_acceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Jbutton_accederActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, -1, -1));
+        getContentPane().add(Jbutton_acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, 90, -1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Contraseña");
@@ -107,6 +116,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
+
+        jlabel_footer.setText("jLabel3");
+        getContentPane().add(jlabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -117,10 +129,56 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txt_passwordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void Jbutton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton_accederActionPerformed
         //ingresar Boton
+        user = txt_user.getText().trim();
+        pass = txt_password.getText().trim();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(!user.equals("") && !pass.equals("")){ // validacion si ambos o un campo esta en blanco 
+            
+            try{
+                
+                Connection cn = Conexion.conectar(); //conexion con base de datos 
+                PreparedStatement pst = cn.prepareStatement(
+                    "select tipo_nivel, status from usuarios where  username = '"+user+
+                    "' and password = '"+pass+"'");// instruccion a base de datos
+                //selecciona el tipo de nivel y estatus y compara con los que estan en 
+                //la variable user y pass escrita por el usuario
+                
+                ResultSet rs = pst.executeQuery(); //recupera los datos encontrados
+                
+                if(rs.next()){ //si hay concidencias entra el if
+                    
+                    String tipo_nivel = rs.getString("tipo_nivel");
+                    String status = rs.getString("status");
+                    
+                    if(tipo_nivel.equalsIgnoreCase("Administrador") && status.equalsIgnoreCase("Activo")){
+                        dispose(); //cierra la interfaz y abre la siguiente ordenada
+                        new Administrador().setVisible(true); //da un verdadero a ser visible la interfaz administrador 
+                    }else if(tipo_nivel.equalsIgnoreCase("Capturista")&& status.equalsIgnoreCase("Activo")){
+                        dispose();
+                        new Capturista().setVisible(true);
+                    }else if(tipo_nivel.equalsIgnoreCase("Tecnico") &&  status.equalsIgnoreCase("Activo")){
+                        dispose();
+                        new Tecnico().setVisible(true);
+                    }
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Datos de acceso incorrectos");
+                    txt_user.setText("");
+                    txt_password.setText("");
+               }
+                
+            }catch(Exception e){
+                System.err.println("Error en el boton exeder "+e);
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesion, contacte al administrador 423");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "debes llenas todos los campos");
+        }
+        
+        
+    }//GEN-LAST:event_Jbutton_accederActionPerformed
 
         
     private void txt_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userActionPerformed
@@ -164,11 +222,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Jbutton_acceder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Logo;
     private javax.swing.JLabel jLabel_Wallpaper;
+    private javax.swing.JLabel jlabel_footer;
     private javax.swing.JTextField txt_password;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables
