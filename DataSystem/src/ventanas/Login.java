@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ventanas;
 
 import java.awt.Image;
@@ -11,45 +7,36 @@ import javax.swing.Icon;
 import java.sql.*;
 import clases.Conexion;
 import javax.swing.JOptionPane;
-/**
- *
- * @author klite
- */
+
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
-    
     public static String user = "";
     String pass = "";
-    
+
     public Login() {
         initComponents();
-        
+
         setSize(400, 550);//tamano
         setResizable(false); //no es posible la modificacion de tamano de interfaz
         setTitle("Acceso a el sistema."); //titulo
         setLocationRelativeTo(null); //centro de la pantalla
 
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg"); //imagen wallpaper
-        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(400, 700,Image.SCALE_DEFAULT)); //escalara la imagen del jlabel
+        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(400, 700, Image.SCALE_DEFAULT)); //escalara la imagen del jlabel
         jLabel_Wallpaper.setIcon(icono);
         this.repaint(); //actualiza cambios
-        
+
         ImageIcon wallpaper_logo = new ImageIcon("src/images/DS.png"); //imagen de logo en objeto ImageIcon
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(270, 270, Image.SCALE_DEFAULT)); //escala de la imagen
         jLabel_Logo.setIcon(icono_logo); // se le anade a la imagen
         this.repaint(); //actualiza cambios
-        
-        
+
     }
-    
-    
+
     @Override
-    public Image getIconImage(){
-       Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
-       return retValue;
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
     }
 
     /**
@@ -117,57 +104,57 @@ public class Login extends javax.swing.JFrame {
         //ingresar Boton
         user = txt_user.getText().trim();
         pass = txt_password.getText().trim();
-        
-        if(!user.equals("") && !pass.equals("")){ // validacion si ambos o un campo esta en blanco 
-            
-            try{
-                
+
+        if (!user.equals("") && !pass.equals("")) { // validacion si ambos o un campo esta en blanco 
+
+            try {
+
                 Connection cn = Conexion.conectar(); //conexion con base de datos 
                 PreparedStatement pst = cn.prepareStatement(
-                    "select tipo_nivel, status from usuarios where  username = '"+user+
-                    "' and password = '"+pass+"'");// instruccion a base de datos
+                        "select tipo_nivel, status from usuarios where  username = '" + user
+                        + "' and password = '" + pass + "'");// instruccion a base de datos
                 //selecciona el tipo de nivel y estatus y compara con los que estan en 
                 //la variable user y pass escrita por el usuario
-                
+
                 ResultSet rs = pst.executeQuery(); //recupera los datos encontrados
-                
-                if(rs.next()){ //si hay concidencias entra el if
-                    
+
+                if (rs.next()) { //si hay concidencias entra el if
+
                     String tipo_nivel = rs.getString("tipo_nivel");
                     String status = rs.getString("status");
-                    
-                    if(tipo_nivel.equalsIgnoreCase("Administrador") && status.equalsIgnoreCase("Activo")){
+
+                    if (tipo_nivel.equalsIgnoreCase("Administrador") && status.equalsIgnoreCase("Activo")) {
                         dispose(); //cierra la interfaz y abre la siguiente ordenada
                         new Administrador().setVisible(true); //da un verdadero a ser visible la interfaz administrador 
-                    }else if(tipo_nivel.equalsIgnoreCase("Capturista")&& status.equalsIgnoreCase("Activo")){
+                    } else if (tipo_nivel.equalsIgnoreCase("Capturista") && status.equalsIgnoreCase("Activo")) {
                         dispose();
                         new Capturista().setVisible(true);
-                    }else if(tipo_nivel.equalsIgnoreCase("Tecnico") &&  status.equalsIgnoreCase("Activo")){
+                    } else if (tipo_nivel.equalsIgnoreCase("Tecnico") && status.equalsIgnoreCase("Activo")) {
                         dispose();
                         new Tecnico().setVisible(true);
                     }
-                    
-                }else{
+
+                } else {
                     JOptionPane.showMessageDialog(null, "Datos de acceso incorrectos");
                     txt_user.setText("");
                     txt_password.setText("");
-               }
-                
-            }catch(SQLException e){
-                System.err.println("Error en el boton Ingresar "+e);
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Error en el boton Ingresar " + e);
                 JOptionPane.showMessageDialog(null, "Error al iniciar sesion, contacte al administrador 423");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "debes llenas todos los campos");
         }
-        
-        
+
+
     }//GEN-LAST:event_Jbutton_accederActionPerformed
 
-        
+
     private void txt_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userActionPerformed
         //Nombre del usuario Jtextfield
-        
+
     }//GEN-LAST:event_txt_userActionPerformed
 
     /**
