@@ -33,6 +33,7 @@ public class Login extends javax.swing.JFrame {
 
     }
 
+    //permite modificar el logo de la interfaz
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
@@ -92,6 +93,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(txt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
 
         txt_password.setBackground(new java.awt.Color(153, 153, 255));
+        txt_password.setForeground(new java.awt.Color(254, 254, 254));
         txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 220, 30));
@@ -124,7 +126,7 @@ public class Login extends javax.swing.JFrame {
                     String status = rs.getString("status");
 
                     if (tipo_nivel.equalsIgnoreCase("Administrador") && status.equalsIgnoreCase("Activo")) {
-                        dispose(); //cierra la interfaz y abre la siguiente ordenada
+                        this.dispose(); //cierra la interfaz y abre la siguiente ordenada
                         new Administrador().setVisible(true); //da un verdadero a ser visible la interfaz administrador 
                     } else if (tipo_nivel.equalsIgnoreCase("Capturista") && status.equalsIgnoreCase("Activo")) {
                         dispose();

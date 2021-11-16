@@ -40,7 +40,7 @@ public class Administrador extends javax.swing.JFrame {
             if (rs.next()) {
                 //recuperaremos el nombre de usuario y lo guardaremos en nombre_usuario de la clase 
                 nombre_usuario = rs.getString("nombre_usuario");
-                jLabel_nombreusuario.setText("Bienvenido " + nombre_usuario);
+                jLabel_nombreusuario.setText("Bienvenido, " + nombre_usuario);
 
             } else {
 
@@ -84,6 +84,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jLabel_nombreusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 300, 30));
 
         jBuutton_registrarusuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addUser.png"))); // NOI18N
+        jBuutton_registrarusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBuutton_registrarusuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBuutton_registrarusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, 100));
 
         jButton_gestionarus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/informationuser.png"))); // NOI18N
@@ -121,6 +126,13 @@ public class Administrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    //registrar usuario
+    private void jBuutton_registrarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuutton_registrarusuarioActionPerformed
+        RegistrarUsuarios registrarusuarios =  new RegistrarUsuarios(); //objeto de registrar usuarios 
+        registrarusuarios.setVisible(true); //hace visible a el form registrar usuarios
+    }//GEN-LAST:event_jBuutton_registrarusuarioActionPerformed
 
     /**
      * @param args the command line arguments
