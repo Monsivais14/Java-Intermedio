@@ -62,30 +62,17 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel_Logo = new javax.swing.JLabel();
-        txt_password = new javax.swing.JTextField();
         Jbutton_acceder = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
-        jlabel_footer = new javax.swing.JLabel();
+        txt_password = new javax.swing.JPasswordField();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel_Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 270, 270));
-
-        txt_password.setBackground(new java.awt.Color(153, 153, 255));
-        txt_password.setForeground(new java.awt.Color(255, 255, 255));
-        txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_password.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 220, -1));
 
         Jbutton_acceder.setText("Ingresar");
         Jbutton_acceder.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -94,7 +81,7 @@ public class Login extends javax.swing.JFrame {
                 Jbutton_accederActionPerformed(evt);
             }
         });
-        getContentPane().add(Jbutton_acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, 90, -1));
+        getContentPane().add(Jbutton_acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 463, 90, 40));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Contraseña");
@@ -117,17 +104,14 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(txt_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 330, 210, -1));
 
-        jlabel_footer.setText("jLabel3");
-        getContentPane().add(jlabel_footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, -1, -1));
+        txt_password.setBackground(new java.awt.Color(153, 153, 255));
+        txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 220, 30));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        //contrasena JtextField
-        
-    }//GEN-LAST:event_txt_passwordActionPerformed
 
     private void Jbutton_accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbutton_accederActionPerformed
         //ingresar Boton
@@ -169,8 +153,8 @@ public class Login extends javax.swing.JFrame {
                     txt_password.setText("");
                }
                 
-            }catch(Exception e){
-                System.err.println("Error en el boton exeder "+e);
+            }catch(SQLException e){
+                System.err.println("Error en el boton Ingresar "+e);
                 JOptionPane.showMessageDialog(null, "Error al iniciar sesion, contacte al administrador 423");
             }
         }else{
@@ -227,8 +211,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Logo;
     private javax.swing.JLabel jLabel_Wallpaper;
-    private javax.swing.JLabel jlabel_footer;
-    private javax.swing.JTextField txt_password;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_user;
     // End of variables declaration//GEN-END:variables
 }
