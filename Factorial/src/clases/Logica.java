@@ -22,9 +22,9 @@ public class Logica {
     }
 
     public void factorial() {
-
-        aux--;
         
+        aux--;
+        System.out.print("\\"+acomulado+"//");
         if (aux >= 1) {
 
             if (acomulado == 0) {
