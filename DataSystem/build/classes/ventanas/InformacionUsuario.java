@@ -134,35 +134,35 @@ public class InformacionUsuario extends javax.swing.JFrame {
         txt_nombre.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_nombre.setForeground(new java.awt.Color(254, 254, 254));
         txt_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
 
         txt_email.setBackground(new java.awt.Color(153, 153, 255));
         txt_email.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_email.setForeground(new java.awt.Color(254, 254, 254));
         txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, -1));
 
         txt_telefono.setBackground(new java.awt.Color(153, 153, 255));
         txt_telefono.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_telefono.setForeground(new java.awt.Color(254, 254, 254));
         txt_telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 210, -1));
 
         txt_username.setBackground(new java.awt.Color(153, 153, 255));
         txt_username.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_username.setForeground(new java.awt.Color(254, 254, 254));
         txt_username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_username.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
 
         txt_registradopor.setBackground(new java.awt.Color(153, 153, 255));
         txt_registradopor.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_registradopor.setForeground(new java.awt.Color(254, 254, 254));
         txt_registradopor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_registradopor.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_registradopor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt_registradopor.setEnabled(false);
         getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, -1));
 
@@ -181,19 +181,14 @@ public class InformacionUsuario extends javax.swing.JFrame {
         jButton_Actualizar.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         jButton_Actualizar.setForeground(new java.awt.Color(254, 254, 254));
         jButton_Actualizar.setText("Actualizar Usuario");
-        jButton_Actualizar.setBorder(new javax.swing.border.SoftBevelBorder(0));
-        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ActualizarActionPerformed(evt);
-            }
-        });
+        jButton_Actualizar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 210, 35));
 
         jButton_RestaurarPassword.setBackground(new java.awt.Color(153, 153, 255));
         jButton_RestaurarPassword.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         jButton_RestaurarPassword.setForeground(new java.awt.Color(254, 254, 254));
         jButton_RestaurarPassword.setText("Restaurar password");
-        jButton_RestaurarPassword.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jButton_RestaurarPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(jButton_RestaurarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 210, 35));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 460));
 
@@ -210,92 +205,9 @@ public class InformacionUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_nivelesActionPerformed
 
-    //boton actualizar usuario
-    private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-        
-        int permisos_cmb, status_cmb, validacion = 0; //validacion es tipo bandera
-        String nombre, email, telefono, username, pass, permisos_String = "", status_String = "";
-        
-        email = txt_email.getText().trim();
-        username = txt_username.getText().trim();
-        nombre = txt_nombre.getText().trim();
-        telefono = txt_telefono.getText().trim();
-        permisos_cmb = cmb_niveles.getSelectedIndex() + 1;
-        status_cmb = cmb_status.getSelectedIndex() + 1;
-        
-        if(email.equals("")){
-            validacion++;
-        }if(username.equals("")){
-            validacion++;
-        }if(nombre.equals("")){
-            validacion++;
-        }if(telefono.equals("")){
-            validacion++;
-        }
-        
-       
-        if(validacion == 0){  //validacion entra por que si es igual a 0
-            
-            //seleccion en combobox
-            if(permisos_cmb == 1){
-                permisos_String = "Administrador";
-            }else if(permisos_cmb == 2){
-                permisos_String = "Capturista";
-            }else if(permisos_cmb == 3){
-                permisos_String = "Tecnico";
-            }
-            //status a string 
-            if(status_cmb == 1){
-                status_String = "Activo";
-            }else if(status_cmb == 2 ){
-                status_String = "Inactivo";
-            }
-            
-            try{
-                
-                Connection cn = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement( //identifica si username ingresado existe ya en la base de datos
-                        "select username from usuarios where username = '"+username+"' and not id_usuario = '"+ID+"'");
-                // comprueba si el nombre de usuarios esta ocupado tomando en cuenta que no consulte el nombre que estamos utilizando
-                
-                ResultSet rs = pst.executeQuery(); //ejecutar unaconsulta
-                
-                if(rs.next()){// si encuentra el nombre de usuario igual
-                    JOptionPane.showMessageDialog(null, "Nombre de usurio no disponible");
-                    cn.close();
-                }else{
-                    
-                    Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst2 = cn2.prepareStatement(
-                            "update usuarios set nombre_usuario = ?, email = ?, telefono = ?, username = ?,  tipo_nivel = ?, status = ? "
-                                    + "where id_usuario = '"+ID+"'");
-                    //modifica la informacion previamente ingresada en el sistema
-                    
-                    pst2.setString(1,nombre );
-                    pst2.setString(2, email);
-                    pst2.setString(3, telefono);
-                    pst2.setString(4, username );
-                    pst2.setString(5, permisos_String );
-                    pst2.setString(6, status_String);
-                    
-                    pst2.executeUpdate(); //ejecutar una actualizacion
-                    cn2.close();
-                    
-                    JOptionPane.showMessageDialog(null, "Modificacion exitosa");
-                }
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "Error al actualizar, contacta al soporte del programa");
-                System.err.println("Error al actualizar: "+e);
-            }            
-            
-        }else{ //validacion no es igual a 0, por lo tanto fal tan llenar campos
-            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-        }
-        
-    }//GEN-LAST:event_jButton_ActualizarActionPerformed
-
-    
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
