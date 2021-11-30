@@ -100,9 +100,19 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jButton_gestionarus, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 120, 100));
 
         jButton_registrarusr3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/capturista.png"))); // NOI18N
+        jButton_registrarusr3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_registrarusr3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_registrarusr3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 120, 100));
 
         jButton_tecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tecnico.png"))); // NOI18N
+        jButton_tecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_tecnicoActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_tecnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 100));
 
         jButton_registrarusr5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/opciones.png"))); // NOI18N
@@ -143,6 +153,18 @@ public class Administrador extends javax.swing.JFrame {
         GestionarUsuarios gs = new GestionarUsuarios();
         gs.setVisible(true);
     }//GEN-LAST:event_jButton_gestionarusActionPerformed
+
+    private void jButton_registrarusr3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_registrarusr3ActionPerformed
+        //panel vista capturista
+        Capturista cap = new Capturista();
+        cap.setVisible(true);
+    }//GEN-LAST:event_jButton_registrarusr3ActionPerformed
+
+    private void jButton_tecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_tecnicoActionPerformed
+        //panel vista tecnico
+        Tecnico tec = new Tecnico();
+        tec.setVisible(true);
+    }//GEN-LAST:event_jButton_tecnicoActionPerformed
 
     /**
      * @param args the command line arguments

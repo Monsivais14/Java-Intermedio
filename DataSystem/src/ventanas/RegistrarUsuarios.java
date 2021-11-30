@@ -1,15 +1,12 @@
 package ventanas;
 
 import clases.Conexion;
-import com.sun.java.swing.plaf.windows.resources.windows;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.net.ConnectException;
 import java.sql.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 
 public class RegistrarUsuarios extends javax.swing.JFrame {
 

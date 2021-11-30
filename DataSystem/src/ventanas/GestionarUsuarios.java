@@ -3,7 +3,6 @@ package ventanas;
 
 import java.sql.*;
 import clases.Conexion;
-import com.sun.java.swing.plaf.windows.resources.windows;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;

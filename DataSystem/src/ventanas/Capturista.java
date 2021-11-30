@@ -1,12 +1,16 @@
 
 package ventanas;
 
+import javax.swing.WindowConstants;
+
 public class Capturista extends javax.swing.JFrame {
 
     public Capturista() {
         initComponents();
         setTitle("Capturista");
         setLocationRelativeTo(null);
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
