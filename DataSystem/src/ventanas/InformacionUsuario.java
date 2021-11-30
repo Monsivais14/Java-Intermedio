@@ -134,35 +134,35 @@ public class InformacionUsuario extends javax.swing.JFrame {
         txt_nombre.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_nombre.setForeground(new java.awt.Color(254, 254, 254));
         txt_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
 
         txt_email.setBackground(new java.awt.Color(153, 153, 255));
         txt_email.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_email.setForeground(new java.awt.Color(254, 254, 254));
         txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, -1));
 
         txt_telefono.setBackground(new java.awt.Color(153, 153, 255));
         txt_telefono.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_telefono.setForeground(new java.awt.Color(254, 254, 254));
         txt_telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 210, -1));
 
         txt_username.setBackground(new java.awt.Color(153, 153, 255));
         txt_username.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_username.setForeground(new java.awt.Color(254, 254, 254));
         txt_username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_username.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
 
         txt_registradopor.setBackground(new java.awt.Color(153, 153, 255));
         txt_registradopor.setFont(new java.awt.Font("Fira Sans", 1, 16)); // NOI18N
         txt_registradopor.setForeground(new java.awt.Color(254, 254, 254));
         txt_registradopor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_registradopor.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        txt_registradopor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt_registradopor.setEnabled(false);
         getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, -1));
 
@@ -181,7 +181,7 @@ public class InformacionUsuario extends javax.swing.JFrame {
         jButton_Actualizar.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         jButton_Actualizar.setForeground(new java.awt.Color(254, 254, 254));
         jButton_Actualizar.setText("Actualizar Usuario");
-        jButton_Actualizar.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jButton_Actualizar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ActualizarActionPerformed(evt);
@@ -193,7 +193,12 @@ public class InformacionUsuario extends javax.swing.JFrame {
         jButton_RestaurarPassword.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         jButton_RestaurarPassword.setForeground(new java.awt.Color(254, 254, 254));
         jButton_RestaurarPassword.setText("Restaurar password");
-        jButton_RestaurarPassword.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        jButton_RestaurarPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton_RestaurarPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RestaurarPasswordActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_RestaurarPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 210, 35));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 460));
 
@@ -294,6 +299,11 @@ public class InformacionUsuario extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
+
+    private void jButton_RestaurarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RestaurarPasswordActionPerformed
+            RestaurarPassword rp = new RestaurarPassword();
+            rp.setVisible(true);
+    }//GEN-LAST:event_jButton_RestaurarPasswordActionPerformed
 
     
     public static void main(String args[]) {
