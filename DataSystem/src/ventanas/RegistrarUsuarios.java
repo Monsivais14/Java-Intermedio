@@ -39,8 +39,8 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -58,15 +58,15 @@ public class RegistrarUsuarios extends javax.swing.JFrame {
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Fira Sans", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel1.setText("Registro de usuarios");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
-
         jLabel2.setFont(new java.awt.Font("Fira Sans", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(254, 254, 254));
         jLabel2.setText("Nombre:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Fira Sans", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel1.setText("Registro de usuarios");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
 
         txt_nombre.setBackground(new java.awt.Color(155, 155, 255));
         txt_nombre.setForeground(new java.awt.Color(254, 254, 254));
