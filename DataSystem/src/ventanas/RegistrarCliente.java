@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.sql.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class RegistrarCliente extends javax.swing.JFrame {
@@ -86,7 +87,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Fira Sans", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(254, 254, 254));
         jLabel6.setText("Registrar cliente");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, 30));
 
         txt_nombre.setBackground(new java.awt.Color(155, 155, 255));
         txt_nombre.setForeground(new java.awt.Color(254, 254, 254));
@@ -118,7 +119,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 120, 100));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 120, 100));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 350));
 
         pack();
@@ -126,11 +127,71 @@ public class RegistrarCliente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //registrar cliente
+        
+        int validacion=0; //tipo bandera
+        //recuperacion de datos
+        String nombre = txt_nombre.getText().trim();
+        String email = txt_email.getText().trim();
+        String telefono = txt_telefono.getText().trim();
+        String direccion = txt_direccion.getText().trim();
+        
+        //si la condicion se cumple el tipo bandera sube de valor no dejando validar la siguiente accion
+        if(nombre.equals("")){
+         validacion++;   
+        }if(email.equals("")){
+         validacion++;   
+        }if(telefono.equals("")){
+         validacion++;   
+        }if(direccion.equals("")){
+         validacion++;   
+        }
+        
+        if(validacion == 0){
+            //campos validados
+            
+            try{
+                
+                Connection cn = Conexion.conectar(); //conexion a bd
+                PreparedStatement pst = cn.prepareStatement(
+                        "insert into clientes values (?,?,?,?,?,?)"); //instruccion a bd, ingresa 6 valoes en users
+                
+                //valores insertados a clientes en bd
+                pst.setInt(1, 0);//0 es por ID de cliente autoincrementable 
+                pst.setString(2, nombre);
+                pst.setString(3, email);
+                pst.setString(4, telefono);
+                pst.setString(5, direccion);
+                pst.setString(6, user); //usuario que esta registrando a el cliente
+                
+                pst.executeUpdate();
+                
+                Limpiar();
+                
+                JOptionPane.showMessageDialog(null, "Exito al registrar nuevo cliente");
+                        
+            }catch(SQLException e){
+                
+                System.err.print("Error al conectar base de datos: "+e);
+                JOptionPane.showMessageDialog(null, "Error al registrar nuevo cliente, porfavor contacta al soporte del sistema.");
+            }
+            
+        }else{
+            //falta uno o mas campos
+            JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+            
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
+    public void Limpiar(){
+        txt_nombre.setText("");
+        txt_email.setText("");
+        txt_direccion.setText("");
+        txt_telefono.setText("");
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
