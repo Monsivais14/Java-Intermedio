@@ -1,18 +1,98 @@
-
 package ventanas;
 
 import java.sql.*;
 import clases.Conexion;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 
 public class GestionarClientes extends javax.swing.JFrame {
-    
+
     String user;
-    public static int IDcliente_update; //indica cual es el usuario de la consulta
-    
+    public static int IDcliente_update; //indica cual es el usuario de la consulta  
+    DefaultTableModel model1 = new DefaultTableModel(); //tabla de gestion
+
     public GestionarClientes() {
         initComponents();
+        user = Login.user;
+
+        setSize(640, 360);
+        setResizable(rootPaneCheckingEnabled);
+        setTitle("Capturista - Sesion de " + user);
+        setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //determina que no mate el proceso al cerrarse
+
+        ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg"); //imagen wallpaper
+        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(), jLabel_Wallpaper.getWidth(), Image.SCALE_DEFAULT)); //escalara la imagen del jlabel
+        jLabel_Wallpaper.setIcon(icono);
+        this.repaint(); //actualiza cambios
+
+//bd_ds
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement(
+                    "select id_cliente, nombre_cliente, mail_cliente, tel_cliente, ultima_modificacion from clientes");
+            ResultSet rs = pst.executeQuery();
+
+            jTable_clientes = new JTable(model1); //model coloca datos dentor de la tabla
+            jScrollPane.setViewportView(jTable_clientes);//coloca la tabla dentro del Scrollpane
+
+            //columnas de la informacion
+            model1.addColumn("ID");
+            model1.addColumn("Nombre");
+            model1.addColumn("Email");
+            model1.addColumn("Telefono");
+            model1.addColumn("Modificado por");
+
+            while (rs.next()) {//mientras existan registros ejecutara el codigo
+                Object[] fila = new Object[5];
+                for (int i = 0; i < 5; i++) {
+//extrae toda la informacion obtenida dentro de la base de datos con el rs y almacenandolo en un objetc
+                    fila[i] = rs.getObject(i + 1);
+                }
+                model1.addRow(fila);//agrega la fila en la tabla
+            }
+            cn.close();
+
+        } catch (SQLException e) {
+            System.err.print("Error en conexion de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error en llenado de base de datos, porfavor coneacta al soporte del programa 542");
+        }
+
+//accion de abrir interfaz de cada uno de los clientes
+        jTable_clientes.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//obtiene el punto exacto donde se esta dando click en la tabla
+                int fila_point = jTable_clientes.rowAtPoint(e.getPoint());
+                int columa_point = 0; //0 por que siempre se obtendra el ID del cliente para ver su informacion
+
+//verifica si se a presionado sobre la tabla cumpliendo la condicion
+                if (fila_point > -1) {
+//obtenemos el id del cliente 
+                    //se obtiene directamente de la tbla con sus coordenadas 
+                    IDcliente_update = (int) model1.getValueAt(fila_point, columa_point);
+                    JOptionPane.showMessageDialog(null, "el id es:" + IDcliente_update);
+                }
+            }
+
+        });
     }
-    
+
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -49,7 +129,6 @@ public class GestionarClientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -1,4 +1,3 @@
-
 package ventanas;
 
 import javax.swing.WindowConstants;
@@ -24,58 +23,56 @@ public class Capturista extends javax.swing.JFrame {
 
     String user, nombre_usuario;
     int sesion_usuario; //bandera
-    
+
     public Capturista() {
         initComponents();
-        
+
         user = Login.user;
         sesion_usuario = Administrador.sesion_usuario; //si es administrador la variables es igual a 1 sino solamente 0
-        
-        setSize(550,300);
+
+        setSize(550, 300);
         setResizable(false);
-        setTitle("Capturista - Sesion de "+user);
+        setTitle("Capturista - Sesion de " + user);
         setLocationRelativeTo(null);
-        
+
         //condicional que marca el tipo de finalizacion dependiendo de el tipo de sesion de usuario enviado desde Administrador
-        if(sesion_usuario == 1){
+        if (sesion_usuario == 1) {
             setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        }else{
+        } else {
             //no tiene valor y por lo tanto tampoco es igual a 1 y eso identifica que es sesion de capturista sin administrador
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
-        
+
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg"); //imagen wallpaper
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(), jLabel_Wallpaper.getWidth(), Image.SCALE_DEFAULT)); //escalara la imagen del jlabel
         jLabel_Wallpaper.setIcon(icono);
         this.repaint(); //actualiza cambios
-        
+
         //obtiene el nombre del usuario capturista desde la base de datos
-        try{
-            
-            Connection cn =  Conexion.conectar();
+        try {
+
+            Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement(
-                    "select nombre_usuario from usuarios where username = '"+user+"' ");
+                    "select nombre_usuario from usuarios where username = '" + user + "' ");
             //recupera la informacion de nombre usuarios de la tabla usuarios donde la tabla de usuarios sea el nombre dle usuario
-            
+
             ResultSet rs = pst.executeQuery();
-            
+
             if (rs.next()) {
-                nombre_usuario=rs.getString("nombre_usuario");
-                jLabel_nombreUsuario.setText("Bienvenido "+nombre_usuario);
+                nombre_usuario = rs.getString("nombre_usuario");
+                jLabel_nombreUsuario.setText("Bienvenido " + nombre_usuario);
             }
-            
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             System.err.print("Error al obtener nombre de capturista");
         }
     }
-    
+
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
         return retValue;
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -145,7 +142,8 @@ public class Capturista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_registrarClienteActionPerformed
 
     private void jButton_gestionarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_gestionarClientesActionPerformed
-        // TODO add your handling code here:
+        GestionarClientes gc = new GestionarClientes();
+        gc.setVisible(true);
     }//GEN-LAST:event_jButton_gestionarClientesActionPerformed
 
     private void jButton_ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimirActionPerformed
