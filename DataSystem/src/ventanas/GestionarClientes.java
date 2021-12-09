@@ -80,7 +80,11 @@ public class GestionarClientes extends javax.swing.JFrame {
 //obtenemos el id del cliente 
                     //se obtiene directamente de la tbla con sus coordenadas 
                     IDcliente_update = (int) model1.getValueAt(fila_point, columa_point);
-                    JOptionPane.showMessageDialog(null, "el id es:" + IDcliente_update);
+                    
+                    //hace visible a la interfaz de informacion del cliente
+                    Informacion_Cliente informacion_Cliente1 = new Informacion_Cliente();
+                    informacion_Cliente1.setVisible(true);
+                    
                 }
             }
 
