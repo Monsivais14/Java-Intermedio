@@ -8,19 +8,21 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import static ventanas.GestionarClientes.IDcliente_update;
 
 public class Informacion_Cliente extends javax.swing.JFrame {
 
@@ -125,8 +127,9 @@ public class Informacion_Cliente extends javax.swing.JFrame {
                     //se obtiene directamente de la tbla con sus coordenadas 
                     IDequipo = (int) model1.getValueAt(fila_point, columa_point);
 
-                    //hace visible la informacion del equipo (form aun no programado)
-
+                    //hace visible la informacion del equipo al hacer doble click en el equipo en tabla
+                    InformacionEquipo informacionEquipo = new InformacionEquipo();
+                    informacionEquipo.setVisible(true);
                 }
             }
 
@@ -271,7 +274,12 @@ public class Informacion_Cliente extends javax.swing.JFrame {
         getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 210, 35));
 
         jBUtton_Imprimir_Reporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresora.png"))); // NOI18N
-        getContentPane().add(jBUtton_Imprimir_Reporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, 120, 100));
+        jBUtton_Imprimir_Reporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBUtton_Imprimir_ReporteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBUtton_Imprimir_Reporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 120, 100));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 400));
 
         pack();
@@ -315,17 +323,21 @@ public class Informacion_Cliente extends javax.swing.JFrame {
                         //actualiza la tabla clientes con lso siguientes parametros donde la ID cliente sea la que tengas en la bd
                         "update clientes set nombre_cliente = ?, mail_cliente = ?, tel_cliente = ?, dir_cliente = ?, ultima_modificacion = ? "
                         + "where id_cliente = '" + IDcliente_update + "'");
-                
+
+                //pst de ordenes de que ? y que infromacion lleva cada campo de la informacion de la base de datos
                 pst.setString(1, nombre);
                 pst.setString(2, mail);
                 pst.setString(3, telefono);
                 pst.setString(4, direccion);
                 pst.setString(5, user);
-                
+
+                //ejecucion
                 pst.executeUpdate();
-                
+                //limpia los campos
                 Limpiar();
-                
+
+                cn.close();
+
                 JOptionPane.showMessageDialog(null, "Actualizacion de cliente ejecutada con exito");
 
             } catch (SQLException e) {
@@ -339,14 +351,147 @@ public class Informacion_Cliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
-    public void Limpiar(){
+    private void jBUtton_Imprimir_ReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUtton_Imprimir_ReporteActionPerformed
+        //Impirmir PDF de la informacion del cliente 
+
+        Document documento = new Document(); //clase document que genera formado pdf
+
+        try {
+
+            //obtiene la ruta de guardado del usuario 
+            String ruta = System.getProperty("user.home");
+
+            //la indtancia del documento y donde se ubicara el documento y ademas el como se llamara el documento y su formato
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Escritorio/" + txt_nombre.getText().trim() +"_infcliente"+ ".pdf"));
+
+            //se puede utilizar unia libreria directamente sin importarla para no causar conflicto cnn las del jdk
+            //el objeto header obtiene con su libreria y get instance la imagen BannerPDF, y header servira de titulo en el PDF
+            com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/images/BannerPDF.jpg");
+            header.scaleToFit(650, 1000); //largo y escala de header
+            header.setAlignment(Chunk.ALIGN_CENTER); //alinea en el centro a el objeto header utilizando la clase chunk
+
+            //objeto Paragraph para formato de texto
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER); //el texto del parrafo se centra
+            parrafo.add("Informacion del cliente. \n \n"); //String annadido a el parrafo, con dos saltos de linea 
+            //Annade el tipo de letra a el parrafo con la clase FontFactory donde se paran 4 parametros, tipo de letra, tamanno, estilo de texto(negritas,etc), despues el color del texto
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.open();//abre el documento
+            documento.add(header); //annade la imagen header que hace de cabecera de la clase Image de itext
+            documento.add(parrafo); //annade el texto de parrafo de la clase Paragraph
+
+            //tabla de datos generales
+            PdfPTable tablaCliente = new PdfPTable(5); //objeto de la clase PDFTable(el parametro a pasar el el numero de columnas)
+            //nombre de las columnas de la tabla
+            tablaCliente.addCell("ID");
+            tablaCliente.addCell("Nombre");
+            tablaCliente.addCell("email");
+            tablaCliente.addCell("Telefono");
+            tablaCliente.addCell("Direcion");
+
+            //try catch de base de datos tabla cliente
+            try {
+
+                Connection cn = Conexion.conectar(); //conexion a base de datos
+                PreparedStatement pst = cn.prepareStatement( //orden a base de datos
+                        //IDcliente_update viene desde gestionar usuarios al seleccionar con doble click al cliente de la JTable
+                        //obtiene toda la informacion del cliente donde la ID de la misma a IDcliente_update
+                        "select * from clientes where id_cliente = '" + IDcliente_update + "'");
+
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) { //rs next es por si encuentra informacion
+
+                    do {
+                        //llendo de tabla
+                        tablaCliente.addCell(rs.getString(1)); //ID
+                        tablaCliente.addCell(rs.getString(2)); //nombre de cliente
+                        tablaCliente.addCell(rs.getString(3)); //email del cliente
+                        tablaCliente.addCell(rs.getString(4)); //telefono del cliente
+                        tablaCliente.addCell(rs.getString(5)); //direccion del cliente
+
+                    } while (rs.next()); //se hara el ciclo mientras rs.next siga encontrando informacion
+
+                    //guarda tabla cliente dentro de documento
+                    documento.add(tablaCliente);
+
+                    
+                    //
+                    //segundo parrafo
+                    //
+                    Paragraph parrafo2 = new Paragraph();
+                    parrafo2.setAlignment(Paragraph.ALIGN_CENTER);//alinea a el centro el parrafo
+                    parrafo2.add("\n \n Equipos Registrados \n \n");//annade un String a el parrafo, los saltos de linea son para separar las tablas del parrafo y dar un mejor orden
+                    parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));//formato de texto, tipo de letra, tamanno, tipo de letra y color
+
+                    //annadimos parrafo2 a documento
+                    documento.add(parrafo2);
+
+                    PdfPTable tablaEquipos = new PdfPTable(4); //Tabla de equipos, parametro de es de columnas
+                    //columnas de tabla equipos
+                    tablaEquipos.addCell("ID equipo");
+                    tablaEquipos.addCell("Tipo");
+                    tablaEquipos.addCell("Marca");
+                    tablaEquipos.addCell("Estatus");
+
+                    try { //try de conexion a base de datos para tablaequipos
+
+                        Connection cn2 = Conexion.conectar(); //conexion
+                        PreparedStatement pst2 = cn2.prepareStatement( //orden a base de datos
+                                //selecciona los parametros de la tabla equipos donde el ID cliente sea al cliente_update el cual viene desde gestion 
+                                "select id_equipo, tipo_equipo,marca,status from equipos where id_cliente = '" + IDcliente_update + "'");
+                        
+                        ResultSet rs2 = pst2.executeQuery();
+                        
+                        if (rs2.next()) { //rs.next es por si entuentra informacion en bd
+                            
+                            do{
+                                //llenado de tabla
+                                tablaEquipos.addCell(rs2.getString(1)); //id equipo
+                                tablaEquipos.addCell(rs2.getString(2)); //Tipo
+                                tablaEquipos.addCell(rs2.getString(3)); //marca
+                                tablaEquipos.addCell(rs2.getString(4)); //estatus
+                                
+                            }while(rs2.next()); //se har ael bucle mientras encuentre informacion
+                            
+                            documento.add(tablaEquipos); //annade la tablaequipos dentro del documento
+                            
+                        }
+                        
+                    } catch (SQLException e) { //catch de tablaEquipos de coneccion a base de datos
+                        System.err.println("Error en llenado de tablaEquipos = "+e);
+                    }
+
+                }
+
+            } catch (SQLException e) { //catch de tablacliente de coneccion a base de datos
+                System.err.println("Error en llenado de tablaCliente = " + e);
+            }
+            
+            documento.close(); //cierre del documento
+            
+            JOptionPane.showMessageDialog(null, "Reporte creado con exito");
+
+        } catch (DocumentException i) { //catch de itextPDF
+            JOptionPane.showMessageDialog(null, "Error al generar PDF, contacta al soporte del programa 1");
+            System.out.println("Error en PDF  = "+i);
+        }catch(IOException u){
+            JOptionPane.showMessageDialog(null, "Error al generar PDF, contacta al soporte del programa 2");
+            System.out.println("Error en Imagen de PDF = "+u);
+        }
+
+    }//GEN-LAST:event_jBUtton_Imprimir_ReporteActionPerformed
+
+    public void Limpiar() {
+        //limpiar todos los campos jTexfield
         txt_nombre.setText("");
         txt_direccion.setText("");
         txt_email.setText("");
         txt_telefono.setText("");
-        
+
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -115,7 +115,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         });
         getContentPane().add(cmb_tipo_equipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        cmb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asus", "Acer", "HP", "Dell", "Lenovo", "Huawei" }));
+        cmb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acer ", "Alienware", "Apple", "Asus", "Brother", "Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
         getContentPane().add(cmb_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         jScrollPane.setViewportView(jTextPane_observaciones);
