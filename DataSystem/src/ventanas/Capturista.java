@@ -7,17 +7,18 @@ import clases.Conexion;
 //itext imports
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileOutputStream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Capturista extends javax.swing.JFrame {
 
@@ -147,7 +148,74 @@ public class Capturista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_gestionarClientesActionPerformed
 
     private void jButton_ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimirActionPerformed
-        // TODO add your handling code here:
+        //boton imprimir 
+        
+        Document documento = new Document();
+        
+        try {
+            
+            String ruta =  System.getProperty("user.home"); 
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Escritorio/ListaClientes.pdf")); //lugar de guardado a pdf
+            
+            //imagen dentro de header con objeto de la libreroa itext.text.image no importada por conflicto con una de JDK
+            com.itextpdf.text.Image header  = com.itextpdf.text.Image.getInstance("src/images/BannerPDF.jpg");
+            header.scaleToFit(460,1000); //dimensiones
+            header.setAlignment(Chunk.ALIGN_CENTER); //alinea en el centro la imagen
+            
+            Paragraph parrafo = new Paragraph(); //objeto parrafo 
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);//alineado en centro
+            parrafo.add("Lista de clientes \n \n "); //texto a mostrar en parrafo
+            parrafo.setFont(FontFactory.getFont("tahoma",18,Font.BOLD,BaseColor.DARK_GRAY)); //tipo de letra, tamanno,tipo de letra, color
+            
+            //apertura de documento
+            documento.open();
+            
+            documento.add(header); //annade la imagen enel documento
+            documento.add(parrafo); //annade el parrafo en el documento 
+            
+            PdfPTable tabla = new PdfPTable(5); //tabla (numero de columnas)
+            tabla.addCell("ID"); //nombres de las columnas
+            tabla.addCell("Nombre");
+            tabla.addCell("Email");
+            tabla.addCell("Telefono");
+            tabla.addCell("Direccion");
+            
+            try {//trycatch de base de datos
+                
+                Connection cn = Conexion.conectar(); //conexion a bd
+                PreparedStatement pst = cn.prepareStatement( //orden a bd
+                        //obten todo de la tabla clientes
+                        "select * from clientes");
+                
+                ResultSet rs = pst.executeQuery();
+                
+                if (rs.next()) {
+                    
+                    do{
+                        //recuperamos y almacenamos la info de la bd_ en la tabla
+                        tabla.addCell(rs.getString(1));
+                        tabla.addCell(rs.getString(2));
+                        tabla.addCell(rs.getString(3)); //los numeros es la clumna en  bd
+                        tabla.addCell(rs.getString(4));
+                        tabla.addCell(rs.getString(5));
+                        
+                    }while(rs.next()); //el ciclo se ejecutara mientras encuentre mas informacion
+                    
+                    documento.add(tabla);
+                    cn.close();
+                }
+                
+            } catch (SQLException e) {
+                System.err.println("Error al generar lista de clientes = "+e);
+            }
+            
+            documento.close(); //cierre del documento
+            JOptionPane.showMessageDialog(null, "Exito al generar lista de clientes");
+            
+        } catch (Exception e) {
+            System.err.println("Error en generar PDF = "+e);
+            JOptionPane.showMessageDialog(null, "Error al genear PDF, contacta al soporte del programa");
+        }
     }//GEN-LAST:event_jButton_ImprimirActionPerformed
 
     /**

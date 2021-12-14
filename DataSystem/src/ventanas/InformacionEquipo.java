@@ -81,7 +81,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hubo un error al consultar, contacta al soporte del programa");
         }
         
-        setTitle("Equipo del cliente "+nom_cliente);
+        setTitle("Equipo del cliente - "+nom_cliente);
         setSize(670,530);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -243,7 +243,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jButton_Actualizar.setBackground(new java.awt.Color(153, 153, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         jButton_Actualizar.setForeground(new java.awt.Color(254, 254, 254));
-        jButton_Actualizar.setText("Actualizar Cliente");
+        jButton_Actualizar.setText("Actualizar equipo");
         jButton_Actualizar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,10 +257,80 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-        // boton actualizar
+        // boton actualizar equipo
+        //actualiza la informacion del equipo en la base de datos
+        
+        int validacion = 0; //tipo bandera para los campos de texto
+        String tipo_equipo,marca,modelo,num_serie,estatus,observaciones; //guardaran la informacion de los textfield temporalmente
+
+        tipo_equipo = cmb_tipo_equipo.getSelectedItem().toString(); //obtiene el item de la combobox seleccionado en forma de String 
+        marca = cmb_marca.getSelectedItem().toString(); 
+        estatus = cmb_estatus.getSelectedItem().toString();
+        
+        modelo = txt_modelo.getText().trim(); //recupera el contenido del textfield y borra los espacios basura
+        num_serie = txt_num_serie.getText().trim();
+        observaciones = jTextPane_observaciones.getText();
+        
+        if(modelo.equals("")){
+            validacion++;
+        }
+        if(num_serie.equals("")){
+            validacion++;
+        }
+        if(observaciones.equals("")){
+            validacion++;
+            jTextPane_observaciones.setText("sin observaciones");
+        }
+        
+        if(validacion == 0){
+            //ningun field vacio
+            
+            try { //conexion a bd
+                
+                Connection cn = Conexion.conectar(); //conexion a bd
+                PreparedStatement pst = cn.prepareStatement( //orden a bd
+                        //actualiza las siguientes variables en la bd en la tabla equipos donde ID_equipos sea + ID_equipo que viene desde informacion cliente en la tabla de equipos al hacer dos clicks
+                        "update equipos set tipo_equipo = ?, marca = ?, modelo = ?, num_serie = ?, observaciones = ?, status = ?, ultima_modificacion = ? "
+                                + "where id_equipo = '"+id_equipo+"'");
+                
+                //annade los valores a agregar en la base de datos 
+                pst.setString(1, tipo_equipo);
+                pst.setString(2, marca);
+                pst.setString(3, modelo);
+                pst.setString(4, num_serie);
+                pst.setString(5, observaciones);
+                pst.setString(6, estatus);
+                pst.setString(7, user);
+                
+                //ejecuta la actualizacion de base de datos
+                pst.executeUpdate();
+                //cierra conexion a bd
+                cn.close();
+                
+                Limpiar();
+                
+                JOptionPane.showMessageDialog(null, "Exito al actualizar informacion del equipo");
+                
+            } catch (SQLException e) {
+                System.err.println("Error en base de datos  al actualizar equipo = "+e);
+                JOptionPane.showMessageDialog(null, "Error al actualizar infromacion del equipo, contacta al soporte del programa");
+            }
+            
+        }else{
+            //campos vacios
+            JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+        }
         
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
+    public void Limpiar(){
+        txt_nombreCliente.setText("");
+        txt_fecha_ingreso.setText("");
+        txt_modelo.setText("");
+        txt_num_serie.setText("");
+        jTextPane_observaciones.setText("");
+    }
+    
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
