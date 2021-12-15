@@ -134,7 +134,9 @@ public class Tecnico extends javax.swing.JFrame {
 
     private void jbutton_estatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_estatusActionPerformed
         //boton grafica de estados
-        
+        //hace visible al interfaz graficaestatus
+        GraficarStatus ge = new GraficarStatus();
+        ge.setVisible(true);
     }//GEN-LAST:event_jbutton_estatusActionPerformed
 
     private void jbutton_grafica_marcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_grafica_marcasActionPerformed

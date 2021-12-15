@@ -5,7 +5,10 @@
         <group>
             <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/GestionarUsuarios.java</file>
             <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/InformacionEquipo.java</file>
+            <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/GraficarStatus.java</file>
+            <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/InformacionEquipoTecnico.java</file>
             <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/GestionarEquipos.java</file>
+            <file>file:/home/mpop/NetBeansProjects/Java-Intermedio/DataSystem/src/ventanas/Tecnico.java</file>
         </group>
     </open-files>
 </project-private>

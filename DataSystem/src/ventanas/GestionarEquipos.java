@@ -132,7 +132,61 @@ public class GestionarEquipos extends javax.swing.JFrame {
 
     private void MostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarActionPerformed
         // boton Mostrar en tabla
-
+        
+        String seleccion = cmb_estatus.getSelectedItem().toString(); //seleccion de combo en String
+        String query = ""; //
+        
+        model1.setRowCount(0);//limpia las filas de la tabla
+        model1.setColumnCount(0); //limpia las columnas
+        
+        try { //conexion a bd
+            
+            Connection cn = Conexion.conectar();
+            //instruccion dinamica de base de datos
+            
+            if(seleccion.equalsIgnoreCase("Todos")){ 
+                //instruccion a bd si cumple el if
+                //muetra los parametros de equipos
+                query = "select id_equipo, tipo_equipo,marca, status from equipos"; 
+                
+            }else{
+                //va a buscar en la base de datos solamente los equipos que relacionen el status con el where de seleccion de combobox
+                query = "select id_equipo, tipo_equipo,marca, status from equipos where status = '"+seleccion+"'"; 
+            }
+            
+            PreparedStatement pst = cn.prepareStatement(query);//instruccion query dentro de los if de arriba
+            ResultSet rs =  pst.executeQuery();
+            
+            jTable_equipos = new JTable(model1);  //se crea una tabla con el contenido de modelq
+            jScrollPane_equipos.setViewportView(jTable_equipos); //se introduce la tabla de jtable equipos dentro del scrollpane
+            
+            model1.addColumn(" ");
+            model1.addColumn("Tipo");
+            model1.addColumn("Marca");
+            model1.addColumn("Estatus");
+            
+            while(rs.next()){ //mientras encuentre informacion en bd el buble sigue
+                
+                Object[] fila = new Object[4]; //fila tipo objetc 
+                
+                for(int i=0;i<4;i++){
+                    
+                    fila[i] = rs.getObject(i+1); //guarda la infromacion d ela bs en un object array
+                            
+                }
+                model1.addRow(fila); //annade cada una de las filas entro de la tabla
+            }
+            
+            cn.close();
+                       
+        } catch (SQLException e) {
+            
+            System.err.println("Error en base de datos, en registro de equipos = "+e);
+            JOptionPane.showMessageDialog(null, "Error al llenar tabla, contacta al soporte del programa");
+        }
+        
+        obtener_datos_tabla(); //action listener de tabla, al hacer doble click
+        
     }//GEN-LAST:event_MostrarActionPerformed
 
     public static void main(String args[]) {
@@ -193,10 +247,9 @@ public class GestionarEquipos extends javax.swing.JFrame {
                     //se obtiene directamente de la tbla con sus coordenadas 
                     IDequipo_update = (int) model1.getValueAt(fila_point, columa_point);
 
-                    //hace visible a la interfaz de informacion del equipo (aun no programado)
-                    Informacion_Cliente informacion_Cliente1 = new Informacion_Cliente();
-                    informacion_Cliente1.setVisible(true);
-
+                    //hace visible a la interfaz de informacion del equipo de tecnico
+                    InformacionEquipoTecnico iet = new InformacionEquipoTecnico();
+                    iet.setVisible(true);
                 }
             }
 
