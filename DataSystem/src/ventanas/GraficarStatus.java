@@ -24,7 +24,7 @@ public class GraficarStatus extends javax.swing.JFrame {
         initComponents();
         user = Login.user;
         
-        setSize(550, 450);
+        setSize(551, 450);
         setResizable(false);
         setTitle("Tecnico - Sesion de "+user);
         setLocationRelativeTo(null);
@@ -92,6 +92,7 @@ public class GraficarStatus extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        Mostrar = new javax.swing.JButton();
         JLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,10 +103,24 @@ public class GraficarStatus extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Grafica de estatus");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        Mostrar.setText("Mostrar");
+        Mostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MostrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Mostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, -1));
         getContentPane().add(JLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostrarActionPerformed
+        //bug en clase graphics
+        //la solucion del bug es reacomodar la resolucion del jframe
+        setSize(550, 450);
+    }//GEN-LAST:event_MostrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,6 +159,7 @@ public class GraficarStatus extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabel_Wallpaper;
+    private javax.swing.JButton Mostrar;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
     
