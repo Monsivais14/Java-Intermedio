@@ -21,12 +21,12 @@ public class Login extends javax.swing.JFrame {
         setTitle("Acceso a el sistema."); //titulo
         setLocationRelativeTo(null); //centro de la pantalla
 
-        ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg"); //imagen wallpaper
+        ImageIcon wallpaper = new ImageIcon("images/wallpaperPrincipal.jpg"); //imagen wallpaper
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(400, 700, Image.SCALE_DEFAULT)); //escalara la imagen del jlabel
         jLabel_Wallpaper.setIcon(icono);
         this.repaint(); //actualiza cambios
 
-        ImageIcon wallpaper_logo = new ImageIcon("src/images/DS.png"); //imagen de logo en objeto ImageIcon
+        ImageIcon wallpaper_logo = new ImageIcon("images/DS.png"); //imagen de logo en objeto ImageIcon
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(270, 270, Image.SCALE_DEFAULT)); //escala de la imagen
         jLabel_Logo.setIcon(icono_logo); // se le anade a la imagen
         this.repaint(); //actualiza cambios

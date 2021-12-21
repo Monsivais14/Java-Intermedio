@@ -179,6 +179,7 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         txt_modelo.setForeground(new java.awt.Color(254, 254, 254));
         txt_modelo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_modelo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_modelo.setEnabled(false);
         getContentPane().add(txt_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 210, -1));
 
         txt_num_serie.setBackground(new java.awt.Color(153, 153, 255));
@@ -186,6 +187,7 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         txt_num_serie.setForeground(new java.awt.Color(254, 254, 254));
         txt_num_serie.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_num_serie.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_num_serie.setEnabled(false);
         getContentPane().add(txt_num_serie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 210, -1));
 
         txt_ultima_modificacion.setBackground(new java.awt.Color(153, 153, 255));
@@ -208,9 +210,16 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         cmb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acer ", "Alienware", "Apple", "Asus", "Brother", "Dell", "HP", "Lenovo", "Samsung", "Toshiba", "Xerox" }));
+        cmb_marca.setEnabled(false);
+        cmb_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_marcaActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmb_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         cmb_tipo_equipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
+        cmb_tipo_equipo.setEnabled(false);
         getContentPane().add(cmb_tipo_equipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jTextPane_observaciones.setEditable(false);
@@ -269,6 +278,10 @@ public class InformacionEquipoTecnico extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
+
+    private void cmb_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_marcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_marcaActionPerformed
 
     public void Limpiar(){
         txt_fecha_ingreso.setText("");

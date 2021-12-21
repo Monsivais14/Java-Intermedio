@@ -72,6 +72,7 @@ public class Administrador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        CerrarSesion = new javax.swing.JButton();
         jlabel_wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,6 +117,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jButton_tecnico, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 100));
 
         jButton_registrarusr5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/opciones.png"))); // NOI18N
+        jButton_registrarusr5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_registrarusr5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_registrarusr5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, 120, 100));
 
         jLabel1.setForeground(new java.awt.Color(254, 254, 254));
@@ -135,8 +141,16 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel5.setText("Acerca de ");
+        jLabel5.setText("Acerca De");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 350, -1, -1));
+
+        CerrarSesion.setText("Cerrar Sesion Actual");
+        CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarSesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
         getContentPane().add(jlabel_wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-8, -8, 1940, 1100));
 
         pack();
@@ -165,6 +179,23 @@ public class Administrador extends javax.swing.JFrame {
         Tecnico tec = new Tecnico();
         tec.setVisible(true);
     }//GEN-LAST:event_jButton_tecnicoActionPerformed
+
+    private void jButton_registrarusr5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_registrarusr5ActionPerformed
+        //hace visible Acerca de 
+        AcercaDe AD = new AcercaDe();
+        AD.setVisible(true);
+    }//GEN-LAST:event_jButton_registrarusr5ActionPerformed
+
+    private void CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarSesionActionPerformed
+        //cierra la sesion actual
+        
+        this.setVisible(false);
+        
+        Login log = new Login();
+        log.setVisible(true);
+        
+        user = "";
+    }//GEN-LAST:event_CerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +233,7 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CerrarSesion;
     private javax.swing.JButton jButton_gestionarus;
     private javax.swing.JButton jButton_registrarusr3;
     private javax.swing.JButton jButton_registrarusr5;

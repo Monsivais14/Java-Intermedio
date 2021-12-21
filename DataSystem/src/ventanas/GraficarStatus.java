@@ -24,7 +24,7 @@ public class GraficarStatus extends javax.swing.JFrame {
         initComponents();
         user = Login.user;
         
-        setSize(551, 450);
+        setSize(549, 450);
         setResizable(false);
         setTitle("Tecnico - Sesion de "+user);
         setLocationRelativeTo(null);
@@ -111,7 +111,7 @@ public class GraficarStatus extends javax.swing.JFrame {
             }
         });
         getContentPane().add(Mostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, -1));
-        getContentPane().add(JLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 450));
+        getContentPane().add(JLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

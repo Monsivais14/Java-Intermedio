@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Tecnico extends javax.swing.JFrame {
 
@@ -76,6 +77,7 @@ public class Tecnico extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        CerrarSesion = new javax.swing.JButton();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -121,6 +123,14 @@ public class Tecnico extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(254, 254, 254));
         jLabel3.setText("Grafica de marcas");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, -1));
+
+        CerrarSesion.setText("Cerrar Sesion Actual");
+        CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarSesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 300));
 
         pack();
@@ -141,12 +151,27 @@ public class Tecnico extends javax.swing.JFrame {
 
     private void jbutton_grafica_marcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton_grafica_marcasActionPerformed
         //boton grafica de marcas
-        
+        GraficarMarcas GM = new GraficarMarcas();
+        GM.setVisible(true);
     }//GEN-LAST:event_jbutton_grafica_marcasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarSesionActionPerformed
+        //cierra la sesion actual
+        
+        if(sesion_usuario == 1){
+            JOptionPane.showMessageDialog(null, "Error, Cierra sesion desde la ventana Administrador");
+        }else if(sesion_usuario == 0){
+            this.setVisible(false);
+
+        Login log = new Login();
+        log.setVisible(true);
+
+        user = "";
+        }
+        
+        
+    }//GEN-LAST:event_CerrarSesionActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -181,6 +206,7 @@ public class Tecnico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CerrarSesion;
     private javax.swing.JButton jButton_gestion_equipos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

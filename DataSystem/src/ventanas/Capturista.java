@@ -86,9 +86,11 @@ public class Capturista extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        CerrarSesion = new javax.swing.JButton();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel_nombreUsuario.setFont(new java.awt.Font("Noto Sans", 1, 20)); // NOI18N
@@ -131,7 +133,15 @@ public class Capturista extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(254, 254, 254));
         jLabel3.setText("Imprimir");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, -1, -1));
-        getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 300));
+
+        CerrarSesion.setText("Cerrar Sesion Actual");
+        CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarSesionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
+        getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -218,6 +228,22 @@ public class Capturista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_ImprimirActionPerformed
 
+    private void CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarSesionActionPerformed
+        //cierra la sesion actual
+
+        if(sesion_usuario == 1){
+            JOptionPane.showMessageDialog(null, "Error, Cierra sesion desde la ventana Administrador");
+        }else if(sesion_usuario == 0){
+            this.setVisible(false);
+
+        Login log = new Login();
+        log.setVisible(true);
+
+        user = "";
+        }
+        
+    }//GEN-LAST:event_CerrarSesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -254,6 +280,7 @@ public class Capturista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CerrarSesion;
     private javax.swing.JButton jButton_Imprimir;
     private javax.swing.JButton jButton_gestionarClientes;
     private javax.swing.JButton jButton_registrarCliente;
