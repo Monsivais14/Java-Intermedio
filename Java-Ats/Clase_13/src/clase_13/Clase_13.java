@@ -10,12 +10,15 @@ public class Clase_13 { // Clase Math
         double base = 4, exponente = 2; //exponentes
         double resultado_pow = Math.pow(base, exponente);
         
-        float numero = 4.56f;
-        int resultado_round = Math.round(numero);
+        double numero = 4.56;
+        double resultado_round = Math.round(numero);
+        
+        double resultado_random = Math.random();
         
         System.out.println(raiz);
         System.out.println(resultado_pow);
         System.out.println(resultado_round);
+        System.out.println(resultado_random);
     }
     
 }
