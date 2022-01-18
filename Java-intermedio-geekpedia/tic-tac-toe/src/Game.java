@@ -1,4 +1,5 @@
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +26,6 @@ public class Game extends javax.swing.JFrame {
         jugador[1] = "Jugador 1";
         jugador[2] = "Jugador 2";
 
-        System.out.println(CPU);
         if (CPU) {
             jugador[2] = "CPU";
         }
@@ -185,7 +185,9 @@ public class Game extends javax.swing.JFrame {
                         //calcular 'x' y 'y' de CPU
                         int CPU_x = (int) (Math.random() * 3), CPU_y = (int) (Math.random() * 3);
 
-                        if (vic[CPU_x][CPU_y] == 0 && CPU_x != x && CPU_y != y && CPU_x != 3 && CPU_y != 3) {
+                        //el x y y pasados por parametro no lo utilice por que su campo vic[][]
+                        //automaticamente deja de equivaler a 0 y de igual manera no pasa el if
+                        if (vic[CPU_x][CPU_y] == 0 && CPU_x != 3 && CPU_y != 3) {
 
                             if (CPU_x == 0) {
                                 if (CPU_y == 0) {
@@ -225,7 +227,7 @@ public class Game extends javax.swing.JFrame {
             } else {//si turno no esta activo significa que esta jugando jugador vs jugador
                 turno++;//y aumenta de 1 en 1
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             PCPU.doClick();
         }
     }
@@ -249,45 +251,51 @@ public class Game extends javax.swing.JFrame {
         // x = 1 y o = 2
         byte stop = 0;
 
-        for (byte i = 1; i <= 2; i++) {
+        try {
+            for (byte i = 1; i <= 2; i++) {
 
-            for (byte c = 0; c <= 2; c++) {
-                for (byte j = 0; j <= 2; j++) {
+                for (byte c = 0; c <= 2; c++) {
+                    for (byte j = 0; j <= 2; j++) {
 
-                    if (vic[c][j] == i && vic[c][j + 1] == i && vic[c][j + 2] == i) { //para lineas horizontales
-                        stop++;
-                        break; //para el ciclo por que ya encontro al ganador
-                    } else if (vic[c][j] == i && vic[c + 1][j] == i && vic[c + 2][j] == i) { //lineas verticales\
-                        stop++;
-                        break;
-                    } else if (vic[c][j] == i && vic[c + 1][j + 1] == i && vic[c + 2][j + 2] == i) { //diagonal iz a der
-                        stop++;
-                        break;
-                    } else if (vic[2][0] == i && vic[1][1] == i && vic[0][2] == i) { //diagonal iz a der
-                        stop++;
-                        break;
+                        if (vic[c][j] == i && vic[c][j + 1] == i && vic[c][j + 2] == i) { //para lineas horizontales
+                            stop++;
+                            break; //para el ciclo por que ya encontro al ganador
+                        } else if (vic[c][j] == i && vic[c + 1][j] == i && vic[c + 2][j] == i) { //lineas verticales\
+                            stop++;
+                            break;
+                        } else if (vic[c][j] == i && vic[c + 1][j + 1] == i && vic[c + 2][j + 2] == i) { //diagonal iz a der
+                            stop++;
+                            break;
+                        } else if (vic[2][0] == i && vic[1][1] == i && vic[0][2] == i) { //diagonal iz a der
+                            stop++;
+                            break;
+                        }
                     }
-                }
-                if (ganador == false) {
-                    if (stop != 0) {
-                        JOptionPane.showMessageDialog(null, jugador[i] + " ha ganado");
+                    if (ganador == false) {
+                        if (stop != 0) {
+                            JOptionPane.showMessageDialog(null, jugador[i] + " ha ganado");
 
-                        boton1.setEnabled(false);
-                        boton2.setEnabled(false);
-                        boton3.setEnabled(false);
-                        boton4.setEnabled(false);
-                        boton5.setEnabled(false);
-                        boton6.setEnabled(false);
-                        boton7.setEnabled(false);
-                        boton8.setEnabled(false);
-                        boton9.setEnabled(false);
-                        ganador = true;
-                        break;
+                            boton1.setEnabled(false);
+                            boton2.setEnabled(false);
+                            boton3.setEnabled(false);
+                            boton4.setEnabled(false);
+                            boton5.setEnabled(false);
+                            boton6.setEnabled(false);
+                            boton7.setEnabled(false);
+                            boton8.setEnabled(false);
+                            boton9.setEnabled(false);
+                            ganador = true; //define un ganador y al activarse ya 
+                            //no puede volver a entrar
+                            break;
+                        }
                     }
+
                 }
 
             }
-
+        }catch(HeadlessException e){
+            ganador=false;
+            stop=1;//activa el ganador por algun error inesperado
         }
     }
 
